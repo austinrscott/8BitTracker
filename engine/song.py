@@ -84,3 +84,4 @@ class Rest(Note):
 
 class SongEvent(object):
     '''SongEvent: Represents a change of settings in the song. '''
+    pass
