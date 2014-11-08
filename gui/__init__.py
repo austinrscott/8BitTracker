@@ -33,10 +33,15 @@ colour = [
 
 
 def draw_screen(screen, screen_array):
+    """Draws the fake terminal screen
+
+    :param screen:
+    :param screen_array: Array holding the current screen data
+    :return: None
+    """
     for row in xrange(25):
         for col in xrange(80):
             char = screen_array[row][col]
-            #print char
             dest = Rect(col * FONT_WIDTH, row * FONT_HEIGHT, FONT_WIDTH,
                         FONT_HEIGHT)
             # draw bg colour
@@ -44,7 +49,7 @@ def draw_screen(screen, screen_array):
             # draw char
             char_surface = pygame.Surface((FONT_WIDTH, FONT_HEIGHT))
             pixelarray = pygame.PixelArray(char_surface)
-            #print screen_array[row][col]
+
             for y in xrange(FONT_HEIGHT):
                 for x in xrange(FONT_WIDTH):
                     x2 = 7 - x
@@ -52,14 +57,20 @@ def draw_screen(screen, screen_array):
                         pixelarray[x2][y] = colour[char[1]]
                     else:
                         pixelarray[x2][y] = colour[char[2]]
-            #pixelarray[0:100] = (255, 255, 255)
-            #pixelarray[:8] = (255, 0, 0)
             del pixelarray
             screen_surface.blit(char_surface, dest)
-            #pygame.display.flip()
-            #pygame.time.wait(100)
 
-def printline(screen_array, text, row=0, col=0, fg=7, bg=0):
+def printl(screen_array, text, row=0, col=0, fg=7, bg=0):
+    """Prints a line of text on the screen.
+
+    :param screen_array: The screen array
+    :param text: Text to write
+    :param row: Row number
+    :param col: Column number
+    :param fg: foreground color
+    :param bg: background color
+    :return: None
+    """
     for i, char in enumerate(text):
         screen_array[row][col+i] = [ord(char), fg, bg]
         #print ord(char)
@@ -69,15 +80,13 @@ def printline(screen_array, text, row=0, col=0, fg=7, bg=0):
 # Init
 pygame.init()
 screen_surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("PyMUSH")
+pygame.display.set_caption("8BitTracker")
 # Create character array to hold chars to be displayed and the colours (FG & BG)
 screen_chars = []
 for row in range(SCREEN_HEIGHT):
     screen_chars.append([])
     for col in range(SCREEN_WIDTH):
         screen_chars[row].append([0,0,0])
-
-time_start = pygame.time.get_ticks()
 
 # Main Loop
 
@@ -89,17 +98,15 @@ screen_chars[0][40] = [3, 9, 7]
 string = ""
 for i in xrange(36):
     string += chr(i)
-printline(screen_chars, string, 1, 0)
-printline(screen_chars, "0 1 2 3 4 5 6 7 8 9", 3, 5, 5)
-printline(screen_chars, "Hello, World!")
+printl(screen_chars, string, 1, 0)
+printl(screen_chars, "0 1 2 3 4 5 6 7 8 9", 3, 5, 5)
+printl(screen_chars, "Hello, World!")
 
 
 # draw screen
 draw_screen(screen_surface, screen_chars)
-
 pygame.display.flip()
-time_end = pygame.time.get_ticks()
-print 'Took', time_start - time_end, 'ticks.'
+
 pygame.time.delay(10000)
 
 # Clean-up
