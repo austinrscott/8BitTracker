@@ -1,18 +1,19 @@
-'''
-synths is a module which uses pygame audio functions to synthesize waveforms.
-'''
+#!/usr/bin/env python
+
+'''synths.py: A module which uses pygame audio functions to synthesize waveforms.'''
+
 __author__ = 'Austin Scott'
 
-import sys
+import pygame.mixer
+import pygame.sndarray
 
-import pygame
 import numpy as np
 
-# Sets a constant samplerate for the whole project
+# The samplerate used by the synths
 SOUND_SAMPLERATE = 22050
 
+# Initialize the pygame mixer with our project samplerate, 16bits of data per sample (with negative integers) and mono
 pygame.mixer.init(SOUND_SAMPLERATE, -16, 1)
-pygame.init()
 
 # Tells the pygame.sndarray engine that we are using numpy arrays
 pygame.sndarray.use_arraytype('numpy')
@@ -43,18 +44,3 @@ def make_beep(frequency, duration):
 
 # Testing beep. This one lasts for 100 milliseconds and is at 880Hz (A5).
 sound = make_beep(880, .1)
-
-# Initialize the pygame display so that the program can receive keyboard input (requires window focus)
-pygame.display.set_mode((640, 480))
-
-while 1:
-    for event in pygame.event.get():
-        if event.type is pygame.KEYDOWN:
-
-            # Press ESCAPE to exit the program
-            if event.key is pygame.K_ESCAPE:
-                sys.exit()
-
-            # Press SPACE to hear the synthesized beep
-            elif event.key is pygame.K_SPACE:
-                sound.play()
