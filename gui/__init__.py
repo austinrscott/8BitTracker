@@ -93,3 +93,32 @@ def printl(screen_array, text, row=0, col=0, fg=7, bg=0):
     """
     for i, char in enumerate(text):
         screen_array[row][col+i] = [ord(char), fg, bg]
+
+def line(screen_array, char, fg, bg, x0, y0, x1, y1):
+    # Modified: http://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm#Python
+    #items = []
+    dx = abs(x1 - x0)
+    dy = abs(y1 - y0)
+    x, y = x0, y0
+    sx = -1 if x0 > x1 else 1
+    sy = -1 if y0 > y1 else 1
+    if dx > dy:
+        err = dx / 2.0
+        while x != x1:
+            printl(screen_array, char, y, x, fg, bg)
+            err -= dy
+            if err < 0:
+                y += sy
+                err += dx
+            x += sx
+    else:
+        err = dy / 2.0
+        while y != y1:
+            printl(screen_array, char, y, x, fg, bg)
+            err -= dx
+            if err < 0:
+                x += sx
+                err += dy
+            y += sy
+    printl(screen_array, char, y, x, fg, bg)
+

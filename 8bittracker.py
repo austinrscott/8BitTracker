@@ -31,6 +31,8 @@ gui.printl(screen.chars, "Hello, World!")
 # Testing beep. This one lasts for 100 milliseconds and is at 880Hz (A5).
 sound = engine.synths.make_beep(880, .1)
 
+gui.line(screen.chars, '*', 5, 2, 5, 5, 20, 14)
+
 # Main Loop
 while 1:
     # draw screen
