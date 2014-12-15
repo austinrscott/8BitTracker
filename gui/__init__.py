@@ -31,6 +31,26 @@ COLOR = [
     (255, 255, 255)
 ]
 
+class screen():
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+        self.chars = []
+        for row in range(self.height):
+            self.chars.append([])
+            for col in range(self.width):
+                self.chars[row].append([0,0,0])
+
+        self.surface = pygame.display.set_mode((self.width, self.height))
+
+
+def init_screen(width, height):
+    """Starts a fake terminal screen
+    :return: screen object
+    """
+    scr = screen(width, height)
+    return scr
+
 
 def draw_screen(screen, screen_array):
     """Draws the fake terminal screen
