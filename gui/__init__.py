@@ -43,6 +43,30 @@ class screen():
 
         self.surface = pygame.display.set_mode((self.width, self.height))
 
+# Widgets
+
+class label():
+    def __init__(self, x=0, y=0, text="default", fg=7, bg=0):
+        self.x = x
+        self.y = y
+        self.text = text
+        self.fg = fg
+        self.bg = bg
+    def draw(self, screen_array):
+        printl(screen_array, self.text, self.x, self.y, self.fg, self.bg)
+
+class button(label):
+    def __init__(self, x=0, y=0, text="default", fg=7, bg=0, border=False):
+        self.x = x
+        self.y = y
+        self.text = text
+        self.fg = fg
+        self.bg = bg
+        self.border = border
+    def draw():
+        printl(screen_array, self.text, self.x, self.y, sekf.fg, self.bg)
+        # border
+
 
 def init_screen(width, height):
     """Starts a fake terminal screen
@@ -80,7 +104,7 @@ def draw_screen(screen, screen_array):
             del pixelarray
             screen.blit(char_surface, dest)
 
-def printl(screen_array, text, row=0, col=0, fg=7, bg=0):
+def printl(screen_array, text, col=0, row=0, fg=7, bg=0):
     """Prints a line of text on the screen.
 
     :param screen_array: The screen array
@@ -94,9 +118,8 @@ def printl(screen_array, text, row=0, col=0, fg=7, bg=0):
     for i, char in enumerate(text):
         screen_array[row][col+i] = [ord(char), fg, bg]
 
-def line(screen_array, char, fg, bg, x0, y0, x1, y1):
+def line(screen_array, x0, y0, x1, y1, char, fg, bg):
     # Modified: http://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm#Python
-    #items = []
     dx = abs(x1 - x0)
     dy = abs(y1 - y0)
     x, y = x0, y0
@@ -122,3 +145,33 @@ def line(screen_array, char, fg, bg, x0, y0, x1, y1):
             y += sy
     printl(screen_array, char, y, x, fg, bg)
 
+def rect(screen_array, x, y, w, h, fg, bg, border):
+    char = 32 # space
+    for row in xrange(h):
+        for col in xrange(w):
+            if border == 1:
+                # top left corner
+                if row == 0 and col == 0:
+                    char = 218
+                # top right corner
+                elif row == 0 and col == w-1:
+                    char = 191
+                # bottom left corner
+                elif row == h-1 and col == 0:
+                    char = 192
+                # bottom right corner
+                elif row == h-1 and col == w-1:
+                    char = 217
+                # top & bottom edges
+                elif row == 0 or row == h-1:
+                    char = 196
+                # side edge
+                elif col == 0 or col == w-1:
+                    char = 179
+                else:
+                    char = 32 # space
+
+            # put char into array
+            screen_array[x + row][y + col][0] = char
+            screen_array[x + row][y + col][1] = fg
+            screen_array[x + row][y + col][2] = bg
