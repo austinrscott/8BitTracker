@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 '''
 Main python file. Manages event loops.
 '''
@@ -20,12 +22,15 @@ sound = engine.synths.make_beep(880, .1)
 
 labelName = gui.label(10, 10, "Samuel Volk")
 
+buttonAccept = gui.button(10, 15, "Accept", 0, 8, False)
+
 gui.rect(screen.chars, 9, 9, 13, 3, 12, 4, 0)
 
 # Main Loop
 while 1:
     # draw screen
     labelName.draw(screen.chars)
+    buttonAccept.draw(screen.chars)
     gui.draw_screen(screen.surface, screen.chars)
     pygame.display.flip()
 

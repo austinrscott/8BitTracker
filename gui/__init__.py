@@ -63,9 +63,13 @@ class button(label):
         self.fg = fg
         self.bg = bg
         self.border = border
-    def draw():
-        printl(screen_array, self.text, self.x, self.y, sekf.fg, self.bg)
-        # border
+        #self.event = pygame.event.Event(MOUSEBUTTONDOWN)
+
+    def draw(self, screen_array):
+        #if self.border == False:
+        #    rect(screen_array, self.x-1, self.y-1, len(self.text)+2, 3, self.fg, self.bg, 1);
+
+        printl(screen_array, self.text, self.x, self.y, self.fg, self.bg)
 
 
 def init_screen(width, height):
