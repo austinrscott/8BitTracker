@@ -27,8 +27,8 @@ def make_beep(frequency, duration):
 
     # Creates a numpy array representing one of those waves.
     wave = np.zeros(wave_period, np.int16)
-    wave[0:wave_period/2] = -32767
-    wave[wave_period/2:-1] = 32767
+    wave[0:wave_period/2] = -32767/8
+    wave[wave_period/2:-1] = 32767/8
 
     # Multiplies the array until it reaches the desired duration.
     total_sample_length = (duration * SAMPLERATE)
