@@ -1,6 +1,5 @@
-'''
-transport.py will contain the code necessary to manage time in the project. It
-will keep track of current location in the project and will trigger notes when
- necessary, or the end of the song when ready.
-'''
+#!/usr/bin/env python
+
+'''transport.py: Manages the time cursor and proper time playback of the project. Triggers events on the timeline.'''
+
 __author__ = 'Austin Scott'

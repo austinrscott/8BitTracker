@@ -15,7 +15,7 @@ import engine
 FPS_LIMIT = 30 # frames per second
 
 # Init
-pygame.mixer.init(engine.synths.SAMPLERATE, -16, 1)
+pygame.mixer.init(engine.synths.SOUND_SAMPLERATE, -16, 1)
 pygame.init()
 pygame.display.set_caption("8BitTracker")
 screen = gui.init_screen(gui.SCREEN_WIDTH, gui.SCREEN_HEIGHT)
