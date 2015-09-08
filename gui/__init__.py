@@ -39,7 +39,7 @@ class screen():
         for row in range(self.height):
             self.chars.append([])
             for col in range(self.width):
-                self.chars[row].append([0,0,0])
+                self.chars[row].append([0,0,0,False])
 
         self.surface = pygame.display.set_mode((self.width, self.height))
 
@@ -83,10 +83,11 @@ def init_screen(width, height):
 def draw_screen(screen, screen_array):
     """Draws the fake terminal screen
 
-    :param screen:
+    :param screen: The screen surface
     :param screen_array: Array holding the current screen data
     :return: None
     """
+    char_surface = pygame.Surface((FONT_WIDTH, FONT_HEIGHT))
     for row in xrange(25):
         for col in xrange(80):
             char = screen_array[row][col]
@@ -95,18 +96,19 @@ def draw_screen(screen, screen_array):
             # draw bg colour
             #pygame.draw.rect(screen, colour[screen_array[row][col][2]], dest)
             # draw char
-            char_surface = pygame.Surface((FONT_WIDTH, FONT_HEIGHT))
-            pixelarray = pygame.PixelArray(char_surface)
-
-            for y in xrange(FONT_HEIGHT):
-                for x in xrange(FONT_WIDTH):
-                    x2 = 7 - x
-                    if (cp437[char[0]][y] & (1<<x)):
-                        pixelarray[x2][y] = COLOR[char[1]]
-                    else:
-                        pixelarray[x2][y] = COLOR[char[2]]
-            del pixelarray
-            screen.blit(char_surface, dest)
+            if char[3]: # if character has changed draw it
+                pixelarray = pygame.PixelArray(char_surface)
+                for y in xrange(FONT_HEIGHT):
+                    for x in xrange(FONT_WIDTH):
+                        x2 = 7 - x
+                        if (cp437[char[0]][y] & (1<<x)):
+                            pixelarray[x2][y] = COLOR[char[1]]
+                        else:
+                            pixelarray[x2][y] = COLOR[char[2]]
+                del pixelarray
+                screen.blit(char_surface, dest)
+                char[3] = False
+            char_surface.fill((0,0,0))
 
 def printl(screen_array, text, col=0, row=0, fg=7, bg=0):
     """Prints a line of text on the screen.
@@ -120,7 +122,7 @@ def printl(screen_array, text, col=0, row=0, fg=7, bg=0):
     :return: None
     """
     for i, char in enumerate(text):
-        screen_array[row][col+i] = [ord(char), fg, bg]
+        screen_array[row][col+i] = [ord(char), fg, bg, True]
 
 def line(screen_array, x0, y0, x1, y1, char, fg, bg):
     # Modified: http://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm#Python
@@ -179,3 +181,4 @@ def rect(screen_array, x, y, w, h, fg, bg, border):
             screen_array[x + row][y + col][0] = char
             screen_array[x + row][y + col][1] = fg
             screen_array[x + row][y + col][2] = bg
+            screen_array[x + row][y + col][3] = True

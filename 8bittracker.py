@@ -23,7 +23,7 @@ screen = gui.init_screen(gui.SCREEN_WIDTH, gui.SCREEN_HEIGHT)
 # Testing beep. This one lasts for 100 milliseconds and is at 880Hz (A5).
 sound = engine.synths.make_beep(880, .1)
 
-labelFPS = gui.label(0, 24, "60 fps")
+labelFPS = gui.label(10, 24, "60 fps")
 
 buttonAccept = gui.button(10, 15, "Accept", 0, 8, False)
 
@@ -55,6 +55,7 @@ while 1:
         pass
 
     pygame.display.flip()
+    #print currentFPS
     currentFPS = 1000 / (pygame.time.get_ticks() - lastRefresh)
     lastRefresh = pygame.time.get_ticks()
 
