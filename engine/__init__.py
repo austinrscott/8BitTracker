@@ -5,3 +5,4 @@
 __author__ = 'Austin Scott'
 
 import synths
+import song

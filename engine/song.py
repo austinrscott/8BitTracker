@@ -58,7 +58,20 @@ __author__ = 'Austin Scott'
 
 class Song(object):
     '''Song: The overarching class which holds all data about a song.'''
-    pass
+    self.channels = []
+    self.channels.append(Channel('MF'))
+    self.channels.append(Channel('MB'))
+
+class Channel(object):
+    '''Object: A single channel.'''
+
+    def __init__(self, name):
+        """Initializes a Channel Object.
+
+        :param name: The channel name (usually MF or MB).
+        """
+        self.name = name
+        self.length = 0
 
 class Note(object):
     '''Note: Represents a note.'''
